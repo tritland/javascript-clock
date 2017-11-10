@@ -62,13 +62,42 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      /* default is 50%, which makes it rotate from the center; changing to 100% makes it rotate from the far right  */
+      transform: rotate(90deg); 
+      /* starts them at 12 o'clock */
+      transition: all 0.05s;
+      /* every half second it transitions itself */
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+      /* gives some effect to the transition */
     }
 
   </style>
 
   <script>
+const secondHand = document.querySelector('.second-hand');
+const minuteHand = document.querySelector('.min-hand');  
+const hourHand = document.querySelector('.hour-hand');
 
+function setDate(){
+const now = new Date();
 
+const seconds = now.getSeconds();
+const secondsDegrees = ((seconds / 60) * 360) + 90; //gives a percentage that you multiple by 360 degrees
+secondHand.style.transform = `rotate(${secondsDegrees}deg)`;//styles the secondHand
+// console.log(seconds) - gets seconds of current minute
+// console.log('hi');
+
+const minutes = now.getMinutes();
+const minutesDegrees = ((minutes / 60) * 360) + 90; //
+minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+
+const hours = now.getHours();
+const hoursDegrees = ((hours / 12) * 360) + 90; //
+hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+
+}
+setInterval(setDate, 1000); //runs setDate every second;
   </script>
 </body>
 </html>
